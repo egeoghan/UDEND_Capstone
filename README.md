@@ -30,7 +30,7 @@ In order to run this data pipeline, you will first need to ensure you are set up
 
 
 ## Project Run
-To run this project, run ‘python create_tables.py’. Then run ‘python etl.py' to perform all necessary steps for the pipeline including data quality checks.
+To run this project, run ‘python create_tables.py’. Then run ‘python etl.py' to perform all necessary steps for the pipeline including data quality checks. If you need to re-run it, you will need to manually delete the artifcats in S3, this ensures it does not accidentally overwrite the parquet tables in S3 and ensure purposeful data lake changes.
 
 
 ## What’s Next?
