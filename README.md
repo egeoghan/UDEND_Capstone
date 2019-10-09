@@ -64,19 +64,19 @@ LIMIT 30;
 ## Data Dictionary
 [Data Dictionary](DataDictionary.pdf?raw=true)
 
-## Project Setup
-In order to run this data pipeline, you will first need to ensure you are set up with the appropriate data sets. Then you will need to create a bucket in S3 that will be used as your data lake. The last AWS piece is a redshift cluster. Once these are created, fill in the dl.cfg with the AWS key credentials, details on the redshift cluster, details on the S3 bucket, and the IAM role that will be used when performing the copy from S3 to redshift.
+## Project Setup - One time actions
+In order to run this data pipeline, you will first need to ensure you are set up with the appropriate data sets. Then you will need to create a bucket in S3 that will be used as your data lake. The last AWS piece is a redshift cluster. Once these are created, fill in the dl.cfg with the AWS key credentials, details on the redshift cluster, details on the S3 bucket, and the IAM role that will be used when performing the copy from S3 to redshift. Then we will do the table creations only once, as outlined below in steps to run.
 
 ## Steps to Run
 To run this project, run ‘python create_tables.py’. Then run ‘python etl.py' to perform all necessary steps for the pipeline including data quality checks. If you need to re-run it, you will need to manually delete the artifcats in S3, this ensures it does not accidentally overwrite the parquet tables in S3 and ensure purposeful data lake changes.
-### Pipeline Steps
+### Repeatable Pipeline Steps
 1. Load staging tables with minimally filtered data to S3 as parquet
 2. Perform some transformations and load target tables to S3
 3. Copy staging and target tables into Redshift
 
 
 ## What’s Next?
-The next step would be to add a table to redshift containing the mapping of the values from the I94. This would give more insight to some of the columns from the immigrations_table such as residence and citizenship. 
+The next step would be to add a table to redshift containing the mapping of the values from the I94. This would give more insight to some of the columns from the immigrations_table such as residence and citizenship. Also, one of the constraints of this project is that theer are target tables in S3 and in redshift, which means we may want to add more to the data quality checks to ensure the table remain in unison.
 
 If next data load required 100x more data or be accessed by a lot of users every day, I would increase the spark cluster size as well as the Redshift cluster size.
 
