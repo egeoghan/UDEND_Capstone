@@ -8,15 +8,21 @@ The goal of this project is to use immigration and airport data to help a immigr
 For this scenario, we wouldn’t really need data updated too often, probably only annually since it will impact something that can’t be changed all too quickly. However, the other unknown use cases for the data lake may require the data to be updated more often. 
 
 ### Sample Queries
+
+```
 SELECT COUNT(airport_code)
 FROM immigrations_table
 WHERE immigrations_table.airport_code = 'ATL';
+```
 
+```
 SELECT COUNT(DISTINCT airport_code)
-FROM immigrations_table
+FROM immigrations_table;
+```
 
 
-# Find the most common states 
+Find the most common states 
+```
 SELECT airports_table.state_code, count(immigrations_table.airport_code) as flight_count
 FROM immigrations_table
 JOIN airports_table
@@ -24,9 +30,11 @@ ON airports_table.airport_code = immigrations_table.airport_code
 GROUP BY immigrations_table.airport_code, airports_table.state_code
 ORDER BY flight_count DESC
 LIMIT 10;
+```
 
 
-#Find the states with the most unique airports used 
+Find the states with the most unique airports used 
+```
 SELECT airports_table.state_code, count(DISTINCT immigrations_table.airport_code) as flight_count
 FROM immigrations_table
 JOIN airports_table
@@ -34,7 +42,9 @@ ON airports_table.airport_code = immigrations_table.airport_code
 GROUP BY airports_table.state_code
 ORDER BY flight_count DESC
 LIMIT 10;
+```
 
+```
 SELECT airports_table.city_name, count(immigrations_table.airport_code) as flight_count, time_table.month
 FROM immigrations_table
 JOIN airports_table
@@ -44,6 +54,7 @@ ON immigrations_table.arrival_date = time_table.date
 GROUP BY time_table.month, airports_table.city_name
 ORDER BY flight_count DESC
 LIMIT 30;
+```
 
 ## Data Model
 ![Alt text](data_model_udend_capstone.png?raw=true)
