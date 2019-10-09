@@ -25,10 +25,7 @@ If the database needed to be accessed by over 100 people I think I made a good c
 ![Alt text](data_model_udend_capstone.png?raw=true)
 
 ## Data Dictionary
-<object data="DataDictionary.pdf" type="application/pdf" width="700px" height="700px">
-    <embed src="DataDictionary.pdf">
-    </embed>
-</object>
+[Data Dictionary](DataDictionary.pdf?raw=true)
 
 ## Project Setup
 In order to run this data pipeline, you will first need to ensure you are set up with the appropriate data sets. Then you will need to create a bucket in S3 that will be used as your data lake. The last AWS piece is a redshift cluster. Once these are created, fill in the dl.cfg with the AWS key credentials, details on the redshift cluster, details on the S3 bucket, and the IAM role that will be used when performing the copy from S3 to redshift.
