@@ -9,6 +9,12 @@ For this scenario, we wouldn’t really need data updated too often, probably on
 
 Since the project is slotted to figure out where to post workers for the nonprofit in the first quarter of next year, we will only use the first couple months of data. However, we may want to consider using more as time goes on.
 
+
+## Tools and Technologies
+This project uses Spark to do distributed data processing. I chose to use the Python which is supported by Spark to perform the ETL process in the etl.py file. I chose to use Spark instead of Pandas because it is a technology I am new to and wanted to try it out. I also really like the .alias function used in the Pyspark library. I chose to use S3 because it is a very logical choice for a data lake because of its easy key value storage and handling of parquet files which can easily be queried for any questions. I chose Redshift for the data warehouse as an option so that data scientists on the team would easily be able to plug in with AWS Quicksight to deliver on this time deadline the fastest way possible. 
+
+I chose to use the star schema data model for this application as can be seen below. This enables users to gain quick insights on immigration travel and a closer look at airports and time details as they see fit. Based on the requirements, this model will store the data in the most efficient way so that time and airport details don't need to be replicated for each immigration event. 
+
 ### Sample Queries
 
 ```
@@ -75,9 +81,14 @@ To run this project, run ‘python create_tables.py’. Then run ‘python etl.p
 3. Copy staging and target tables into Redshift
 
 
-## What’s Next?
+## What’s Next and Other Possible Scenarios
 The next step would be to add a table to redshift containing the mapping of the values from the I94. This would give more insight to some of the columns from the immigrations_table such as residence and citizenship. Also, one of the constraints of this project is that theer are target tables in S3 and in redshift, which means we may want to add more to the data quality checks to ensure the table remain in unison.
 
-If next data load required 100x more data or be accessed by a lot of users every day, I would increase the spark cluster size as well as the Redshift cluster size.
+#### 100x data
+If next data load required 100x more data I would increase the redshift cluster to a ds2.8xlarge to accomodate the large size and tune the spark jobs to be on a more distributed system by adding more nodes to the compute processes. Since we are already using Spark, we have very efficient memory allocation already in place to handle a large distributed system for that much data.
 
-If the pipeline had to run at 7am every day, I would definitely utilize a scheduler such as airflow. I would also need to add refreshing the s3 bucket folders for the data lake.
+#### Daily pipeline
+If the pipeline had to run at 7am every day, I would definitely utilize a scheduler such as airflow. I would also need to add refreshing the s3 bucket folders for the data lake. Within airflow we would complete all of the steps outlined above in the pipeline. I would also definitely want to add a check to ensure the data in S3 is in sync with what we have in redshift, unless we have a need to further aggregate data in redshift which is possibility with this project.
+
+#### Access to 100+ people
+I would probably use Mesos as a cluster manager if many different team members are going to be working on the database. Also, we would need to again increase the redshift size as mentioned above in order to accomodate more users. Additionally I would enable the concurrency scaling feature of redshift which would enable concurrent users and queries to the data warehouse without losing performance on query speed.
