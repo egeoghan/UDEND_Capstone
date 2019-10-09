@@ -7,6 +7,8 @@ The goal of this project is to use immigration and airport data to help a immigr
 
 For this scenario, we wouldn’t really need data updated too often, probably only annually since it will impact something that can’t be changed all too quickly. However, the other unknown use cases for the data lake may require the data to be updated more often. 
 
+Since the project is slotted to figure out where to post workers for the nonprofit in the first quarter of next year, we will only use the first couple months of data. However, we may want to consider using more as time goes on.
+
 ### Sample Queries
 
 ```
